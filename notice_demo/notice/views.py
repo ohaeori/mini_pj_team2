@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from matplotlib.pyplot import title
 from .models import Notice
-
+from django.http import HttpResponse
 # Create your views here.
 #처음화면
 def index(request):
@@ -40,3 +40,15 @@ def delete_notice(request, pk):
         poster.delete()
         return redirect('/notice_list/')
     return render(request, 'notice/delete_notice.html', {'poster': poster})
+
+
+def upload1(request):
+    if request.method == 'POST':
+        upload_file = request.FILES.get('file') # 파일 객체
+        name = upload_file.name # 파일 이름
+        size = upload_file.size # 파일 크기
+        with open(name, 'wb') as file: # 파일 저장
+            for chunk in upload_file.chunks():
+                file.write(chunk)
+        return HttpResponse('%s<br>%s' % (name, size))
+    return render(request, 'notice/upload1.html')
