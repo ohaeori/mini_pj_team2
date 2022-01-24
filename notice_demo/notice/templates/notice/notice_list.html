@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>notice-list</title>
+</head>
+<body>
+    게시판 목록<br><br>
+    <table>
+        {% for list in postlist %}
+            <ul>
+                <a href="{{list.pk}}/">제목 : {{list.postname}}</a><br>
+                내용 : {{list.contents}}
+            </ul>
+        {% endfor %}
+    </table>
+    <button>
+        <a href="write/">작성</a>
+    </button>
+</body>
+</html>
