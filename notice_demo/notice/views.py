@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from matplotlib.pyplot import title
 from .models import Notice
 
 # Create your views here.
@@ -14,9 +15,21 @@ def notice_list(request):
 #게시글 작성
 def create_notice(request):
     if request.method == 'POST':
-        new_article=Notice.objects.create(
-                postname=request.POST['title'],
+        if request.POST['mainphoto']:
+            new_article=Notice.objects.create(
+                title=request.POST['title'],
+                contents=request.POST['contents'],
+            )
+        else:
+            new_article=Notice.objects.create(
+                title=request.POST['title'],
                 contents=request.POST['contents'],
             )
         return redirect('/notice_list/')
     return render(request, 'notice/create_notice.html')
+
+#게시글 등록
+def posting(request,pk):
+    poster=Notice.objects.get(pk=pk)
+    return render(request,'notice/posting.html',{'poster':poster})
+
