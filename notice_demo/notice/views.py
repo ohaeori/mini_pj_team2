@@ -33,3 +33,10 @@ def posting(request,pk):
     poster=Notice.objects.get(pk=pk)
     return render(request,'notice/posting.html',{'poster':poster})
 
+#게시글 삭제
+def delete_notice(request, pk):
+    poster = Notice.objects.get(pk=pk)
+    if request.method == 'POST':
+        poster.delete()
+        return redirect('/notice_list/')
+    return render(request, 'notice/delete_notice.html', {'poster': poster})
