@@ -1,4 +1,4 @@
-{% if request.session.u_id %} 
+{% if request.session.u_id_col %} 
 <form method = 'POST'>
     {% csrf_token %}
     <label for ='input_comment'>댓글을 입력하세요(60자 이하)</label>
@@ -18,8 +18,8 @@
 
 {% endif %}
 
-    <ul>
-    {% for comment in comment_list %}
-        <ol>{{comment.u_id_col.u_name}} /{{comment.comment}}/ </ol>
-    {% endfor %}
-    </ul>
+<ul>
+{% for comment in comment_list %}
+    <ol>{{comment.u_id_col.u_name}} /{{comment.comment}}/ </ol>
+{% endfor %}
+</ul>

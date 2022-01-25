@@ -38,7 +38,7 @@ def make_comment(request):
                 u_id_col = user_id,
                 comment = comment_txt)
             one_comment.save()
-            return HttpResponse('작성완료')
+            return redirect('../../comment/make_comment/')
 
     comment_list = Comment.objects.all()
     return render(
