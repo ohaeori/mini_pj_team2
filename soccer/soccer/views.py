@@ -73,16 +73,16 @@ def create_notice(request):
         return redirect('/notice_list/')
     return render(request, 'soccer/create_notice.html')
 
-def make_comment(request):
+def make_comment(request,pk):
     #임시로 로그인 한 척
-    request.session['u_id_col'] = 'user4'
+    #request.session['u_id_col'] = 'user4'
     #request.session.flush()
     
     if request.method == 'POST':
         if request.POST.get('input_comment'):
 
             board_id = 1 # 게시판 번호는 해당 게시글 url에서 가져올 수 있도록 해야함
-            title_id = BOARD_TITLE.objects.filter(t_num = 1)[0] # 마찬가지로 url에서 가져와야함
+            title_id = BOARD_TITLE.objects.filter(t_num = pk)[0] # 마찬가지로 url에서 가져와야함
             user_id = USER.objects.get(u_id = request.session['u_id_col']) #로그인 상태의 유저 아이디를 가져옴
             comment_txt = request.POST.get('input_comment')
             
@@ -101,7 +101,7 @@ def make_comment(request):
 #게시글 보기
 def posting(request,pk):
     poster=BOARD_TITLE.objects.get(pk=pk)
-    make_comment(request)#t_num=poster.t_num
+    make_comment(request,pk)#t_num=poster.t_num
     comment_list = COMMENT.objects.filter(board_title=poster)
     return render(request,'soccer/posting.html',{'poster':poster,'comment_list': comment_list})
 
@@ -162,6 +162,7 @@ def login_custom(request):
         else: #로그인 판단 요소 ==> 나중에 이걸로 다양한 정보 확인(동현에이블러님 활용)
             request.session['u_id'] = u.u_id
             request.session['u_name'] = u.u_name
+            request.session['u_id_col'] = user_id
         return render(request,'soccer/login_custom.html',{'user_list': user_list }
     )   
       
@@ -174,3 +175,15 @@ def logout_custom(request):
     del request.session['u_name'] # 개별 삭제
     request.session.flush() # 전체 삭제
     return redirect('../../')
+
+
+def comment(request):
+    id=request.session['u_id']
+    
+    
+    comment = COMMENT.objects.filter(u_id__contains = id)
+    title = BOARD_TITLE.objects.filter(u_id__contains = id)
+    return render(
+        request,'soccer/comment.html',
+        {'comment' : comment, 'title' : title,}
+    )

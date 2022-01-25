@@ -1,4 +1,4 @@
-{% if request.session.u_id_col %} 
+{% if request.session.u_id %} 
 <form method = 'POST'>
     {% csrf_token %}
     <label for ='input_comment'>댓글을 입력하세요(60자 이하)</label>
