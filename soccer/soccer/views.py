@@ -10,6 +10,9 @@ import collections
 def index(request):
     return render(request,'soccer/index.html')
 
+def community(request):
+    return render(request,'soccer/community.html')
+
 def order_by_comment(request): #댓글 순 정렬
     dic_com = {}
     b = BOARD_TITLE.objects.all()
@@ -108,7 +111,7 @@ def delete_notice(request, pk):
     poster = BOARD_TITLE.objects.get(pk=pk)
     if request.method == 'POST':
         poster.delete()
-        return redirect('/notice_list/')
+        return redirect('/community/notice_list/')
     return render(request, 'soccer/delete_notice.html', {'poster': poster})
 
 
