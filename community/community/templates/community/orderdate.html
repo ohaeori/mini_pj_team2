@@ -1,0 +1,30 @@
+{% comment %} <body>
+    <h1>최신순 게시글 출력</h1>
+    <hr>
+    {% for d in write_date_list %}
+        <h3>{{ d.t_num }} /{{d.title}} / {{ d.date }} </h3>
+    {% endfor %}
+</body>
+
+ {% endcomment %}
+
+<body>
+    {% comment %} <button type="button" onclick="location.href='ordergood.html'">추천순</button>
+    <button type="button" onclick="location.href='orderdate.html'">최신순</button>
+    <button type="button" onclick="location.href='ordercom.html'">댓글순</button> {% endcomment %}
+    <h1>최신순 게시글 출력</h1>
+    <hr>
+    <table border = '1'>
+        <th>게시글 번호</th>
+        <th>제목</th>
+        <th>업로드 날짜</th>
+
+        {% for d in write_date_list %}
+        <tr>
+            <td>{{ d.t_num }}</td>
+            <td href="{{d.pk}}/">{{ d.title }}</td>
+            <td>{{ d.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>

@@ -17,15 +17,27 @@ class USER(models.Model):
         db_table = 'USER'
         managed = False
 
+class BOARD(models.Model):
+    b_id = models.IntegerField(primary_key=True, max_length=100, null=False)
+    b_name = models.CharField(max_length=255,null=False)
+    
+    class Meta:
+        db_table = 'BOARD'
+        managed = False
+
+
 class BOARD_TITLE(models.Model):
     t_num = models.AutoField(primary_key = True,null=False)
-    b_id = models.IntegerField(null=False)
     title = models.CharField(max_length=20,null=False)
-    u_id = models.CharField(max_length=20,null=True)
     date = models.DateTimeField(null=True, auto_now=True)
     content = models.TextField(null=False)
     good = models.IntegerField(null=True)
     url = models.FileField(upload_to='%Y/%m/%d',null=True)
+
+    user = models.ForeignKey(USER, db_column='u_id', on_delete=models.SET_NULL, null=True)
+    #u_id = models.CharField(max_length=20,null=True)
+    board = models.ForeignKey(BOARD,  db_column='b_id',on_delete=models.SET_NULL, null=True)
+    #b_id = models.IntegerField(null=False)
     class Meta:
         db_table = 'BOARD_TITLE'
         managed = False
