@@ -44,9 +44,10 @@ def notice_list(request):
     notice_list=BOARD_TITLE.objects.all()
     write_date_list=notice_list.order_by('-date')
     good_list =notice_list.order_by('-good')
-    list_value1,list_value2,title_list=order_by_comment(request)
+    order=order_by_comment(request)
+    list_value1,list_value2,title_list=order
     return render(request, 'community/notice_list.html',{'notice_list':notice_list,'write_date_list':  write_date_list,'good_list':  good_list
-    ,'com_list':  list_value1, 'title_list': title_list, 'cnt_list':  list_value2, })
+    ,'com_list':  list_value1, 'title_list': title_list, 'cnt_list':  list_value2,'order':order  })
 
 def order_by_date(request): #날짜 순 정렬
    write_date_list =  BOARD_TITLE.objects.all().order_by('-date')

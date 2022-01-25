@@ -8,12 +8,13 @@
     게시판 목록<br><br>
     <table>
 
-        <h1>
-            <button><a href="create_notice/">최신순</a></button>
-            <button><a href="create_notice/">추천순</a></button>
-            <button><a href="create_notice/">댓글순</a></button>
-        </h1>
+        
     <hr>
+    {% comment %} <h1>
+        <button><a href="create_notice/">최신순</a></button>
+        <button><a href="create_notice/">추천순</a></button>
+        <button><a href="create_notice/">댓글순</a></button>
+    </h1> {% endcomment %}
         <table border = '1'>
             <th>게시글 번호</th>
             <th >제목</th>
@@ -40,38 +41,7 @@
             </tr>
             {% endfor %}
         </table>
-        <table>
-            <div class="container" style="display:flex;">
-                <table border = '1'>
-                    <th>게시글 번호</th>
-            
-                    {% for c in com_list %}
-                    <tr>
-                        <td>{{c}}</td>
-                    </tr>
-                    {% endfor %}
-            
-                </table>
-                <table border = '1'>
-              
-                    <th>제목</th>
-                    {% for t in title_list %}
-                    <tr>
-                        <td>{{ t }}</td>
-                    </tr>
-                    {% endfor %}
-            
-                </table>
-                <table border = '1'>
-            
-                    <th>댓글 수</th>
-                    {% for c in cnt_list %}
-                    <tr>
-                        <td>{{ c }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-        </table>
+        
 
     </table>
     <button>
