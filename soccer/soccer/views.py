@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import redirect, render
 from sqlalchemy import null
 from django.http import HttpResponse
-from .models import BOARD_TITLE, COMMENT, USER
+from .models import BOARD_TITLE, COMMENT, USER,BOARD
 import collections
 
 # Create your views here.
@@ -66,11 +66,12 @@ def create_notice(request):
         BOARD_TITLE.objects.create(
             title=request.POST['title'],
             content=request.POST['content'],
+            user=USER.objects.get(u_id=request.session['u_id']),
             url=name,
-            b_id=1,
+            board=BOARD.objects.get(b_name='자유게시판'),
             date=timezone.now()
         )
-        return redirect('/notice_list/')
+        return redirect('/community/notice_list/')
     return render(request, 'soccer/create_notice.html')
 
 def make_comment(request,pk):
@@ -179,10 +180,8 @@ def logout_custom(request):
 
 def comment(request):
     id=request.session['u_id']
-    
-    
-    comment = COMMENT.objects.filter(u_id__contains = id)
-    title = BOARD_TITLE.objects.filter(u_id__contains = id)
+    comment = COMMENT.objects.filter(u_id_col__u_id__contains = id)
+    title = BOARD_TITLE.objects.filter(user__u_id__contains = id)
     return render(
         request,'soccer/comment.html',
         {'comment' : comment, 'title' : title,}
