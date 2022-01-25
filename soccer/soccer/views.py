@@ -8,7 +8,7 @@ import collections
 # Create your views here.
 #처음화면
 def index(request):
-    return render(request,'community/index.html')
+    return render(request,'soccer/index.html')
 
 def order_by_comment(request): #댓글 순 정렬
     dic_com = {}
@@ -46,7 +46,7 @@ def notice_list(request):
     good_list =notice_list.order_by('-good')
     order=order_by_comment(request)
     list_value1,list_value2,title_list=order
-    return render(request, 'community/notice_list.html',{'notice_list':notice_list,'write_date_list':  write_date_list,'good_list':  good_list
+    return render(request, 'soccer/notice_list.html',{'notice_list':notice_list,'write_date_list':  write_date_list,'good_list':  good_list
     ,'com_list':  list_value1, 'title_list': title_list, 'cnt_list':  list_value2,'order':order  })
 
 #게시글 작성
@@ -68,7 +68,7 @@ def create_notice(request):
             date=timezone.now()
         )
         return redirect('/notice_list/')
-    return render(request, 'community/create_notice.html')
+    return render(request, 'soccer/create_notice.html')
 
 def make_comment(request):
     #임시로 로그인 한 척
@@ -92,7 +92,7 @@ def make_comment(request):
             return redirect('/make_comment/')
 
     
-    return render(request,'community/comment_box.html',)
+    return render(request,'soccer/comment_box.html',)
 
 
 #게시글 보기
@@ -100,7 +100,7 @@ def posting(request,pk):
     poster=BOARD_TITLE.objects.get(pk=pk)
     make_comment(request)#t_num=poster.t_num
     comment_list = COMMENT.objects.filter(board_title=poster)
-    return render(request,'community/posting.html',{'poster':poster,'comment_list': comment_list})
+    return render(request,'soccer/posting.html',{'poster':poster,'comment_list': comment_list})
 
 
 #게시글 삭제
@@ -109,7 +109,7 @@ def delete_notice(request, pk):
     if request.method == 'POST':
         poster.delete()
         return redirect('/notice_list/')
-    return render(request, 'community/delete_notice.html', {'poster': poster})
+    return render(request, 'soccer/delete_notice.html', {'poster': poster})
 
 
 
