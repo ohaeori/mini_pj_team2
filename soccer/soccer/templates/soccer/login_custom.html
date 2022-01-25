@@ -1,0 +1,31 @@
+<form method="post" action="./">
+    {% csrf_token %}
+    아이디 : <input type="text" name="u_id"><br>
+    비밀번호 : <input type="text" name="pw"><br>
+    <input type="submit" value="로그인"><br>
+    
+    {% if request.session.u_id %}
+        <a href="./logout/custom/">
+        {{ request.session.u_id }} 님 반갑습니다. (로그아웃)
+        </a>
+    
+    {% else %}
+        <p>현재 상태 : Guest</p>
+    {% endif %}
+    
+</form>
+<body>
+    <button><a href="signup/custom/">회원가입</a></button>
+</body><br>
+<body>
+    커뮤니티<br><br>
+    <button><a href="community/">게시판</a></button>
+</body>
+
+{% comment %} {% if request.session.user_id %}
+    <a href="{% url 'member:logout_custom' %}">
+    {{ request.session.user_name }} 님 반갑습니다. (로그아웃)
+    </a>
+{% else %}
+    <p>현재 상태 : Guest</p>
+{% endif %} {% endcomment %}
