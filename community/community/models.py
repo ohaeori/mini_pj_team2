@@ -1,8 +1,9 @@
 from django.db import models
 from django.db.models.fields import CharField, IntegerField, FloatField, DateField
 from pandas import to_datetime
+# Create your models here.
 
-class User(models.Model):
+class USER(models.Model):
 
     u_id = models.CharField(primary_key=True,  max_length=20, null=False)
     pw = models.CharField(max_length=20, null=False)
@@ -16,24 +17,32 @@ class User(models.Model):
         db_table = 'USER'
         managed = False
 
-class Board_title(models.Model):
+class BOARD(models.Model):
+    b_id = models.IntegerField(primary_key=True, max_length=100, null=False)
+    b_name = models.CharField(max_length=255,null=False)
+    
+    class Meta:
+        db_table = 'BOARD'
+        managed = False
+
+
+class BOARD_TITLE(models.Model):
     t_num = models.AutoField(primary_key = True,null=False)
-    b_id = models.IntegerField(null=False)
     title = models.CharField(max_length=20,null=False)
-    u_id = models.CharField(max_length=20,null=False)
-    date = models.DateTimeField(null=False)
+    date = models.DateTimeField(null=True, auto_now=True)
     content = models.TextField(null=False)
     good = models.IntegerField(null=True)
-    image = models.ImageField(blank=True, null=True)
     url = models.FileField(upload_to='%Y/%m/%d',null=True)
 
-    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    # board = models.ForeignKey(Board, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(USER, db_column='u_id', on_delete=models.SET_NULL, null=True)
+    #u_id = models.CharField(max_length=20,null=True)
+    board = models.ForeignKey(BOARD,  db_column='b_id',on_delete=models.SET_NULL, null=True)
+    #b_id = models.IntegerField(null=False)
     class Meta:
         db_table = 'BOARD_TITLE'
         managed = False
 
-class Comment(models.Model):
+class COMMENT(models.Model):
 
     c_id = models.AutoField(primary_key=True, null=False)
     b_id = models.IntegerField(null=False)
@@ -41,8 +50,8 @@ class Comment(models.Model):
     # u_id = models.CharField(max_length=20, null=False)
     comment = models.CharField(max_length=50, null=False)
 
-    u_id_col = models.ForeignKey(User, db_column='u_id', on_delete=models.SET_NULL, null=True)
-    board_title = models.ForeignKey(Board_title, db_column='t_num', on_delete=models.SET_NULL, null=True)
+    u_id_col = models.ForeignKey(USER, db_column='u_id', on_delete=models.SET_NULL, null=True)
+    board_title = models.ForeignKey(BOARD_TITLE, db_column='t_num', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'COMMENT'

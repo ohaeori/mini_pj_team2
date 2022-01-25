@@ -22,7 +22,7 @@
         {% for d in write_date_list %}
         <tr>
             <td>{{ d.t_num }}</td>
-            <td>{{ d.title }}</td>
+            <td href="{{d.pk}}/">{{ d.title }}</td>
             <td>{{ d.date }}</td>
         </tr>
         {% endfor %}

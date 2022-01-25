@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>notice-list</title>
+</head>
+<body>
+    게시판 목록<br><br>
+    <table>
+
+        <h1>
+            <button><a href="create_notice/">최신순</a></button>
+            <button><a href="create_notice/">추천순</a></button>
+            <button><a href="create_notice/">댓글순</a></button>
+        </h1>
+    <hr>
+        <table border = '1'>
+            <th>게시글 번호</th>
+            <th >제목</th>
+            <th>업로드 날짜</th>
+
+            {% for d in write_date_list %}
+            <tr>
+                <td>{{ d.t_num }}</td>
+                <td><a href="{{d.pk}}/">{{ d.title }}</a></td>
+                <td>{{ d.date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <table border = '1'>
+            <th>게시글 번호</th>
+            <th>제목</th>
+            <th>추천수</th>
+    
+            {% for o in good_list %}
+            <tr>
+                <td>{{ o.t_num }}</td>
+                <td><a href="{{o.pk}}/">{{ o.title }}</a></td>
+                <td>{{ o.good }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <div class="container" style="display:flex;">
+                <table border = '1'>
+                    <th>게시글 번호</th>
+            
+                    {% for c in com_list %}
+                    <tr>
+                        <td>{{c}}</td>
+                    </tr>
+                    {% endfor %}
+            
+                </table>
+                <table border = '1'>
+              
+                    <th>제목</th>
+                    {% for t in title_list %}
+                    <tr>
+                        <td>{{ t }}</td>
+                    </tr>
+                    {% endfor %}
+            
+                </table>
+                <table border = '1'>
+            
+                    <th>댓글 수</th>
+                    {% for c in cnt_list %}
+                    <tr>
+                        <td>{{ c }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+        </table>
+
+    </table>
+    <button>
+        <a href="create_notice/">작성</a>
+    </button>
+</body>
+</html>

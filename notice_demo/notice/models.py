@@ -1,17 +1,17 @@
 from django.db import models
-from isort import file
-from sympy import content
 
 # Create your models here.
 
-class Notice(models.Model):
-    file = models.FileField(upload_to='%Y/%m/%d',null=True)
-    title=models.CharField(max_length=30)
-    contents = models.TextField()
-    photo=models.ImageField(blank=True, null=True)
-    
-    def __str__(self):return self.title
-
-
-class UploadFile(models.Model):
-    file = models.FileField(upload_to='%Y/%m/%d')
+class BOARD_TITLE(models.Model):
+    t_num = models.AutoField(primary_key = True,null=False)
+    b_id = models.IntegerField(null=False)
+    title = models.CharField(max_length=20,null=False)
+    u_id = models.CharField(max_length=20,null=True)
+    date = models.DateTimeField(null=True, auto_now=True)
+    content = models.TextField(null=False)
+    good = models.IntegerField(null=True)
+    url = models.FileField(upload_to='%Y/%m/%d',null=True)
+    class Meta:
+        db_table = 'BOARD_TITLE'
+        app_label = 'notice'
+        managed = False

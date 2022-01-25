@@ -20,27 +20,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mnwbrx3a5(+pwjx3!t=&wxn02ue6@9bzvkpx%+^qzb1be$jgut'
-# 시크릿키는 csrf토큰을 만들때 사용되는 시드(종자값, 소금, 양념)
-# 이 값을 어떻게 주느냐에 따라서 발급되는 값들이 천차만별임
-# 시크릿 키는 절대 노출되면 안됨!!!!!!!
+SECRET_KEY = '4&zz&i(+u#rjlna)4ho5s814rzb%z@pjj(h%p_gg8_c&(!%ll1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'firstapp',
-    'secondapp',
-    'thirdapp',
-    'member',
-    'paging',
-    'file',
-    'boardapp',
+    'community',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,7 +44,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware', # 미들웨어라는 녀석이 우리 눈에 보이지 않게 어디선가 동작하고 있음
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -75,7 +66,6 @@ TEMPLATES = [
             ],
         },
     },
-    
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
@@ -89,14 +79,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'custom': { # thirdapp에서 사용할 데이터베이스 설정 추가
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'aivle',
-    'USER': 'aivle',
-    'PASSWORD': '1234',
-    'HOST': '15.164.153.191',
-    'PORT': 3306
-    },
     'mini': { # miniproject에서 사용할 데이터베이스 설정 추가
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'aivle',
@@ -105,37 +87,9 @@ DATABASES = {
     'HOST': '34.64.201.231',
     'PORT': 3306
     }
-    # 'serim': { # thirdapp에서 사용할 데이터베이스 설정 추가
-    # 'ENGINE': 'django.db.backends.mysql',
-    # 'NAME ': 'aivle_db',
-    # 'USER': 'root',
-    # 'PASSWORD': 'aivle053!',
-    # 'HOST': '34.64.229.228',
-    # 'PORT': 3306
-    #  }
 }
-DATABASE_ROUTERS = ['thirdapp.router.DBRouter', 'boardapp.router.DBRouter']
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers':{
-        'console':
-        {
-            'level': 'DEBUG',
-            'class':
-            'logging.StreamHandler',
-        }
-    },
-    'loggers':
-    {'django.db.backends':
-        {
-            'handlers':
-            ['console'],
-            'level': 'DEBUG',
-        },
-     }
-}
+DATABASE_ROUTERS = ['community.router.DBRouter']
 
 
 # Password validation
@@ -157,21 +111,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
 
-# TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -179,10 +130,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/member/login/'
-LOGOUT_REDIRECT_URL = '/member/login/'
-
 # MEDIA
 MEDIA_URL = '/media/'
-# 2.2버전
-MEDIA_ROOT = os.path.join(BASE_DIR ,'media')
+MEDIA_ROOT = BASE_DIR + '/media'
