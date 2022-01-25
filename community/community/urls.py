@@ -9,4 +9,5 @@ urlpatterns = [
     path('notice_list/create_notice/', views.create_notice),
     path('notice_list/<int:pk>/', views.posting,name='posting'),
     path('notice_list/<int:pk>/delete_notice/', views.delete_notice),
+    path('make_comment/', views.make_comment),
 ]
