@@ -10,4 +10,5 @@ urlpatterns = [
     path('notice_list/<int:pk>/', views.posting,name='posting'),
     path('notice_list/<int:pk>/delete_notice/', views.delete_notice),
     path('upload1/', views.upload1, name='upload1'),
+    path('img_show/', views.img_show, name='img_show'),
 ]

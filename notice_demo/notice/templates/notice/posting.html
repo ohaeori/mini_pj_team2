@@ -9,7 +9,8 @@
     <table>
         <p>제목 : {{poster.title}}</p>
         <p>{{poster.contents}}</p>
-        
+        <img src='{{ uploadFile.file.url }}' width='50%'>
+        <p>{{ uploadFile.file.name }}</p>
         
     </table>
     <button>
