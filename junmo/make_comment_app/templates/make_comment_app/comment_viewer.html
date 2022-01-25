@@ -1,0 +1,17 @@
+<form action="/comment/make_comment" method="post">
+    <label for ='board_id'>board_id</label>
+    <input type=text name="board_id"><br>
+
+    <label for ='title_id'>title_id</label>
+    <input type=text name="title_id"><br>
+
+    <label for ='user_id'>user_id</label>
+    <input type=text name="user_id"><br>
+
+    <label for ='comment_txt'>comment_txt</label>
+    <input type=text name="comment_txt"><br>
+
+    {% csrf_token %}
+    <button>Send</button>
+</form>
+

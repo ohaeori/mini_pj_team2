@@ -1,0 +1,17 @@
+<form method = 'POST' >
+    {% csrf_token %}
+    {% comment %} {% if user.is_authenticated %}  {% endcomment %}
+    {% if request.session.u_id %} 
+    {% comment %} 위의 if 부분은 로그인 방식에 따라서 달라짐(장고 기본로그인 or 로그인 직접구현) {% endcomment %}
+        <label for ='input_comment'>댓글을 입력하세요(60자 이하)</label>
+        <br/>
+        <input type="text" name = "input_comment"/>
+        <input type="submit" value = "작성"/> 
+    {% else %}
+        <label for ='input_comment'>댓글을 입력하세요(60자 이하)</label>
+        <br/>
+        <input type="text" name = "input_comment" value= "로그인이 필요한 기능입니다." disabled/>
+        <input type="submit" value = "작성" disabled/>
+
+    {% endif %}
+</form>
