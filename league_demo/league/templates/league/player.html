@@ -1,0 +1,56 @@
+
+<form method = 'POST'>
+    {% csrf_token %}
+    <label for = 'club'>클럽</label>
+    <input type = "text" name="club"/>
+    <br/>
+    <label for = 'name'>선수 이름</label>
+    <input type = "text" name="name"/>
+    <br/>
+    <label for = 'position'>포지션</label>
+    <select name = 'position'>
+        <option value = "all">모두</option>
+        <option value = "GK">GK</option>
+        <option value = "DF">DF</option>
+        <option value = "MF">MF</option>
+        <option value = "FW">FW</option>
+    </select>
+    <br/>
+    <label for = 'country'>국가</label>
+    <input type = "text" name="country"/>
+    <br/>
+
+    <input type = "submit" value = "검색"/>
+</form>
+
+
+<table border = '1'>
+    <th>선수 아이디</th>
+    <th>이름</th>
+    <th>등번호</th>
+    <th>키</th>
+    <th>몸무게</th>
+    <th>생년월일</th>
+    <th>소속클럽</th>
+    <th>포지션</th>
+    <th>사진</th>
+    <th>국가</th>
+
+    {% for p in P_list %}
+    <tr>
+        <td>{{ p.p_id }}</td>
+        <td>{{ p.p_name }}</td>
+        <td>{{ p.back_num }}</td>
+        <td>{{ p.height }}</td>
+        <td>{{ p.weight }}</td>
+        <td>{{ p.birth_date }}</td>
+        <td>{{ p.club.c_name }}</td>
+        <td>{{ p.position }}</td>
+        <td>{{ p.image }}</td>
+        <td>{{ p.country }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% comment %} {% for p in P_list %}
+<h3>{{ p.p_id }} /{{p.p_name}} / {{ p.position }} </h3>
+{% endfor %} {% endcomment %}

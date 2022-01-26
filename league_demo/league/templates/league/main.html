@@ -1,0 +1,129 @@
+{% comment %} 본인 게시글, 댓글 {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>notice-list</title>
+</head>
+<table>
+    {% for list in date2 %}
+        <button><a href="{{list|date:'m-d'}}/">{{list|date:'m-d'}}</a></button>
+    {% endfor %}
+
+</table>
+{% comment %} {% for c in date2 %}
+<tr>
+    <td>{{c|date:'m-d'}}</td>
+    <br>
+</tr>
+{% endfor %} {% endcomment %}
+
+
+<body>
+    일정<br><br>
+    <button><a href="club/">클럽정보</a></button>
+    <button><a href="player/">선수검색</a></button>
+<table>
+        <table border = '1'>
+            <th>날짜</th>
+            <th>홈</th>
+            <th></th>
+            <th></th>
+            <th>어웨이</th>
+
+            {% for c in game %}
+            {% comment %} {% date = c.date|date:'Y-m-d'%}
+            {%if date>'2022-02-16'%} {% endcomment %}
+            <tr>
+                <td>{{c.date|date:'Y-m-d'}}</td>
+                <td>{{c.home_team}}</td>
+                <td>{{ c.home_goal }}</td>
+                <td>{{c.away_goal}}</td>
+                <td>{{c.away_team}}</td>
+            </tr>
+            {% comment %} {%endif%} {% endcomment %}
+            {% endfor %}
+        </table>
+</head>
+<body>
+    팀순위<br><br>
+<table>
+        <table border = '1'>
+            <th>순위</th>
+            <th>팀</th>
+            <th >경기수</th>
+            <th>승점</th>
+
+            {% for c in club %}
+            <tr>
+                <td>{{c.rank}}</td>
+                <td>{{ c.c_name }}</td>
+                <td>{{c.played}}</td>
+                <td>{{c.pts}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+    커뮤니티 인기글<br><br>
+<table>
+    <table border = '1'>
+        <th>제목</th>
+        <th>시간 </th>
+        <th >작성자</th>
+
+        {% for c in community %}
+        <tr>
+            <td>{{c.title}}</td>
+            <td>{{c.content|truncatechars:20}}</td>
+            <td>{{c.date }}</td>
+            <td>{{c.user}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    뉴스<br><br>
+<table>
+    <table border = '1'>
+        <th>제목</th>
+        <th>내용</th>
+        <th>시간</th>
+        <th >언론사</th>
+
+        {% for c in news %}
+        <tr>
+            <td>{{c.n_title|truncatechars:14}}</td>
+            <td>{{c.content|truncatechars:20}}</td>
+            <td>{{c.date }}</td>
+            <td>{{c.press}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+        
+{% comment %} {%for g in game %}
+    '일정'
+    {{g.date}}//    {{g.home_team}}  {{g.home_goal}} : {{g.away_goal}}  {{g.away_team}}
+    <br>
+{%endfor%}
+
+
+
+{%for n in news %}
+    '뉴스'
+    {{n.n_id}} / {{n.date}} / {{n.url}}
+    <br>
+{%endfor%}
+
+{%for c in community %}
+    '커뮤니티'
+    {{c.title}} / {{c.date}} / {{c.u_id}}
+    <br>
+{%endfor%}
+
+{%for c in club %}
+    '팀순위'
+    {{c.c_name}} / {{c.rank}} / {{c.Pts}}
+    <br>
+{%endfor%}
+<button><a href="../">뒤로가기</a></button>
+ {% endcomment %}
