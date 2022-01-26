@@ -10,13 +10,14 @@
         시즌 일정/결과<br><br>
         <table border = '1'>
             <th>날짜</th>
+            <th>시간</th>
             <th>경기</th>
             
     
             {% for list in schedule_list %}
             <tr>
-                <td id='date'>{{list.date|date:"m-d" }}</td>
-                
+                <td id='date'>{{list.date|date:"m.d(b)" }}</td>
+                <td id='date'>{{list.date|date:"e  h:i-a" }}</td>
                 <td>{{list.home_team }} {{list.home_goal }}: {{ list.away_goal }} {{list.away_team }}</td>
                 
                 
