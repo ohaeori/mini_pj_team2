@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>player-list</title>
+</head>
+<body>
+    클럽 정보 : {{club_name}}<br><br>
+    <table>
+        시즌 일정/결과<br><br>
+        <table border = '1'>
+            <th>날짜</th>
+            <th>경기</th>
+            
+    
+            {% for list in schedule_list %}
+            <tr>
+                <td id='date'>{{list.date|date:"m-d" }}</td>
+                
+                <td>{{list.home_team }} {{list.home_goal }}: {{ list.away_goal }} {{list.away_team }}</td>
+                
+                
+                
+            </tr>
+            {% endfor %}
+        </table>
+    </table>
+    <br><br>
+    <table>
+        팀 스쿼드<br><br>
+
+        <table border = '1'>
+            <th>번호</th>
+            <th>플레이어</th>
+            <th>포지션</th>
+            <th>생년월일</th>
+            <th>국가</th>
+            <th>   키   </th>
+            <th>몸무게</th>
+            
+    
+            {% for list in player_list %}
+            <tr>
+                <td>{{list.back_num }}</td>
+                <td>{{ list.p_name }}</td>
+                <td>{{list.position }}</td>
+                <td>{{list.birth_date }}</td>
+                <td>{{list.country }}</td>
+                <td>{{ list.height }}</td>
+                <td>{{list.weight }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </table>
+    
+
+</body>
+</html>
