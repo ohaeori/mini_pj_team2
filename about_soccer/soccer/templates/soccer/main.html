@@ -7,7 +7,7 @@
 </head>
 <table>
     {% for list in date2 %}
-        <button><a href="/main/{{list|date:'m-d'}}/">{{list|date:'m-d'}}</a></button>
+        <button><a href="/main/{{l_name}}/{{list|date:'m-d'}}/">{{list|date:'m-d'}}</a></button>
     {% endfor %}
 
 </table>
