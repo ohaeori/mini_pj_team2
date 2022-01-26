@@ -4,6 +4,7 @@ from sqlalchemy import null
 from django.http import HttpResponse
 from .models import BOARD_TITLE, COMMENT, USER,BOARD
 import collections
+from django.db.models import Count
 
 # Create your views here.
 #처음화면
@@ -13,33 +14,34 @@ def index(request):
 def community(request):
     return render(request,'soccer/community.html')
 
-def order_by_comment(request): #댓글 순 정렬
-    dic_com = {}
-    b = BOARD_TITLE.objects.all()
-    for i in range(len(BOARD_TITLE.objects.all())): # i=> t_num
-        dic_com[BOARD_TITLE.objects.all()[i].t_num] = b[i].comment_set.count() #댓글수
-    # com_list =  Board_title.objects.values('t_num').annotate(cnt = Count('t_num')).order_by('-cnt')
-    sorted_by_value = sorted(dic_com.items(), key=lambda x: x[1], reverse=True)
+def order_by_comment(request):
+    comment_list = COMMENT.objects.values("board_title").annotate(count_board = Count("c_id")).order_by('-count_board')
+    # for i in comment_list:
+    #     print(i)
+    #     print(type(i))
+    '''
+    {게시글 번호}, {댓글 수}
+    {'board_title': 1, 'count_board': 14}
+    {'board_title': 8, 'count_board': 3}
+    {'board_title': 2, 'count_board': 2}
+    {'board_title': 3, 'count_board': 2}
+    {'board_title': 4, 'count_board': 2}
+    {'board_title': 5, 'count_board': 2}
+    {'board_title': 6, 'count_board': 2}
+    {'board_title': 7, 'count_board': 2}
+    {'board_title': 10, 'count_board': 2}
+    {'board_title': 9, 'count_board': 1}
+    '''
+    board_num = []
+    board_data = []
+    for i in comment_list:
+        board_num.append(i)
+        board_data.append(BOARD_TITLE.objects.get(t_num = i['board_title']))
+        # print(i['board_title'])
+        # print(BOARD_TITLE.objects.get(t_num = i['board_title']).title)
 
-    sorted_dict = collections.OrderedDict(sorted_by_value)
-  
-    list_value1 = []
-    list_value2 = []
-    for k, v in sorted_dict.items():
-        list_value1.append(k)
-        list_value2.append(v)
+    return zip(board_num , board_data)
 
-    d = {}
-    title_list=[]
-    for i in range(len(BOARD_TITLE.objects.all())):
-        d[BOARD_TITLE.objects.all()[i].t_num] = BOARD_TITLE.objects.all()[i].title
-
-    for c in list_value1:
-        for key, value in d.items(): 
-            if c == key:
-                title_list.append(value)
-         
-    return (list_value1,list_value2,title_list)
    
 
 #게시글 목록 표시
@@ -48,9 +50,9 @@ def notice_list(request):
     write_date_list=notice_list.order_by('-date')
     good_list =notice_list.order_by('-good')
     order=order_by_comment(request)
-    list_value1,list_value2,title_list=order
+    zip_board=order
     return render(request, 'soccer/notice_list.html',{'notice_list':notice_list,'write_date_list':  write_date_list,'good_list':  good_list
-    ,'com_list':  list_value1, 'title_list': title_list, 'cnt_list':  list_value2,'order':order  })
+    ,'zip_board':  zip_board})
 
 #게시글 작성
 def create_notice(request):

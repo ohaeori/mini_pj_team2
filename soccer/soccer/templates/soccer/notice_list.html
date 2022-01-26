@@ -43,6 +43,20 @@
         </table>
         
 
+        <table border = '1'>
+            <th>게시글 번호</th>
+            <th>제목</th>
+            <th>댓글수</th>
+    
+            {% for board_num, board_data in zip_board %}
+            <tr>
+                <td>{{ board_num.board_title }}</td>
+                <td><a href='{{board_data.pk}}'>{{ board_data.title }}</a></td>
+                <td>{{ board_num.count_board }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
     </table>
     <button>
         <a href="create_notice/">작성</a>
