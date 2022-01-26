@@ -13,7 +13,7 @@ def player_search(request):
         if request.POST.get('club'):
             club = request.POST.get('club')
             P_list = P_list.filter(club = club)
-            #P_list = Player.objects.filter(club = club)
+
 
         if request.POST.get('name'):
             name = request.POST.get('name')
@@ -39,7 +39,8 @@ def player_search(request):
 
 
 def index(request):
-    return render(request,'league/index.html')
+    date1 = datetime.datetime.today()
+    return render(request,'league/index.html',{'date1':date1})
 
 def club_info(request,c_name):
     player_list=PLAYER.objects.filter(club__c_name__contains=c_name)
@@ -63,47 +64,21 @@ def GetWeekFirstDate(sourceDate):
     return targetDate
 
 # 메인페이지
-def main(request):
+def main(request,date):
     id = 'Premier League'
     date1 = datetime.datetime.today()
     first_date = GetWeekFirstDate(date1)
     news = NEWS.objects.filter(league = id)
     club = CLUB.objects.filter(league = id).order_by('rank')
-    game = GAME.objects.filter(LEAGUE=id)
+    game = GAME.objects.filter(date__contains=date)
     community = BOARD_TITLE.objects.all().order_by('-good')
     date2 = []
     for i in range(7):
         date2.append(AddDays(first_date,i).date)
-    game1=[]
-    for i in game:
-        if i.date ==date1:
-            game1.append(i)
 
-
-    # {{GAME.date|date:'표현식'}}
-    # return HttpResponse(game)
     return render(request,'league/main.html',
-    {'date2':date2,'news':news,'game':game1,'club':club,'community':community})
+    {'date2':date2,'news':news,'game':game,'club':club,'community':community})
 
-# def daily_game(request,date):
-#     id = 'Premier League'
-#     date1 = datetime.datetime.today()
-#     first_date = GetWeekFirstDate(date1)
-#     news = NEWS.objects.filter(league = id)
-#     club = CLUB.objects.filter(league = id).order_by('rank')
-#     game = GAME.objects.filter(LEAGUE=id)
-#     community = BOARD_TITLE.objects.all().order_by('-good')
-#     date2 = []
-#     for i in range(7):
-#         date2.append(AddDays(first_date,i).date)
-#     game1=[]
-#     for i in game:
-#         if i.date ==date1:
-#             game1.append(i)
-
-
-#     # {{GAME.date|date:'표현식'}}
-#     # return HttpResponse(game)
-#     return render(request,'league/main.html',
-#     {'date2':date2,'news':news,'game':game1,'club':club,'community':community})
-#     return render(request,'league/daily.html')
+def news(request):
+    news = NEWS.objects.all()
+    return render(request,'league/news.html',{'news':news})

@@ -6,7 +6,7 @@ from pandas import to_datetime
 class LEAGUE(models.Model):
     l_name = models.CharField(primary_key=True, max_length=50, null=False)
     l_coun = models.CharField(max_length=50, null=False)
-    team_count = models.IntegerField(max_length=10,null=False)
+    team_count = models.IntegerField(null=False)
     image = models.CharField(max_length=1000, null=True)
 
     class Meta:
@@ -21,27 +21,27 @@ class CLUB(models.Model):
     #l_name = models.CharField(max_length=50, null=False) # 관계설정해주기
     league = models.ForeignKey(LEAGUE, db_column='l_name', on_delete=models.CASCADE, null=True)
     stadium = models.CharField(max_length=50, null=False)
-    rank = models.IntegerField(max_length=10, null=False)
-    played = models.IntegerField(max_length=10, null=False)
-    pts = models.IntegerField(max_length=10, null=False)
-    w = models.IntegerField(max_length=10, null=False)
-    d = models.IntegerField(max_length=10, null=False)
-    l = models.IntegerField(max_length=10, null=False)
-    gf = models.IntegerField(max_length=10, null=False)
-    ga = models.IntegerField(max_length=10, null=False)
-    gd = models.IntegerField(max_length=10, null=False)
-    image = models.CharField(max_length=1000, null=False)
+    rank = models.IntegerField( null=False)
+    played = models.IntegerField( null=False)
+    pts = models.IntegerField( null=False)
+    w = models.IntegerField( null=False)
+    d = models.IntegerField( null=False)
+    l = models.IntegerField( null=False)
+    gf = models.IntegerField( null=False)
+    ga = models.IntegerField( null=False)
+    gd = models.IntegerField( null=False)
+    image = models.CharField(max_length=500, null=False)
     class Meta:
         db_table = 'CLUB'
         managed = False                
 
 
 class PLAYER(models.Model):
-    p_id = models.IntegerField(primary_key=True,max_length=10, null=False)
+    p_id = models.IntegerField(primary_key=True, null=False)
     p_name = models.CharField(max_length=50, null=False)
-    back_num = models.IntegerField(max_length=11, null=False)
-    height = models.IntegerField(max_length=11, null=False)
-    weight = models.IntegerField(max_length=11, null=False)
+    back_num = models.IntegerField( null=False)
+    height = models.IntegerField( null=False)
+    weight = models.IntegerField( null=False)
     birth_date = DateField(null=False)
     # c_name = models.CharField(max_length=50, null=False)
     club = models.ForeignKey(CLUB, db_column='c_name', on_delete=models.CASCADE, null=True)
@@ -63,8 +63,8 @@ class GAME(models.Model):
     # CLUB_at = models.ForeignKey(CLUB, db_column='c_name', on_delete=models.CASCADE, null=True)
     
     date = models.DateTimeField(null= False)
-    home_goal = models.IntegerField(max_length=3, null=False)
-    away_goal = models.IntegerField(max_length=3, null=False)
+    home_goal = models.IntegerField( null=False)
+    away_goal = models.IntegerField( null=False)
     LEAGUE = models.ForeignKey(LEAGUE, db_column ='l_name', on_delete=models.CASCADE, null=True)
     
     class Meta:
@@ -75,6 +75,7 @@ class GAME(models.Model):
 class NEWS(models.Model):
     n_id = models.AutoField(primary_key=True, max_length = 255)
     n_title = models.CharField(max_length = 200,null=False)
+    url = models.CharField(max_length = 2000,null=False)
     content = models.TextField(null=False)
     date = models.DateTimeField(null=False)
     image = models.ImageField(blank=True, null=True)
@@ -101,7 +102,7 @@ class USER(models.Model):
         managed = False
 
 class BOARD(models.Model):
-    b_id = models.IntegerField(primary_key=True, max_length=100, null=False)
+    b_id = models.IntegerField(primary_key=True, null=False)
     b_name = models.CharField(max_length=255,null=False)
     
     class Meta:
