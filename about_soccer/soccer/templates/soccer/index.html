@@ -5,7 +5,12 @@
     <title>index</title>
 </head>
 <body>
-    커뮤니티<br><br>
+    리그선택<br><br>
+    {% for league in league_list %}
+        <button><a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/">{{league.l_name}}</a></button>
+        {% endfor %}
+        <br><br><br>
     <button><a href="community/">게시판</a></button>
+    <button><a href="news/">뉴스</a></button>
 </body>
 </html>

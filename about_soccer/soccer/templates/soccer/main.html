@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>notice-list</title>
+</head>
+<table>
+    {% for list in date2 %}
+        <button><a href="/main/{{list|date:'m-d'}}/">{{list|date:'m-d'}}</a></button>
+    {% endfor %}
+
+</table>
+
+
+
+<body>
+    일정<br><br>
+    <button><a href="/{{l_name}}/club/">클럽정보</a></button>
+    <button><a href="/player/">선수검색</a></button>
+<table>
+        <table border = '1'>
+            <th>날짜</th>
+            <th>홈</th>
+            <th></th>
+            <th></th>
+            <th>어웨이</th>
+
+            {% for c in game %}
+
+            <tr>
+                <td>{{c.date|date:'Y-m-d'}}</td>
+                <td>{{c.home_team}}</td>
+                <td>{{ c.home_goal }}</td>
+                <td>{{c.away_goal}}</td>
+                <td>{{c.away_team}}</td>
+            </tr>
+ 
+            {% endfor %}
+        </table>
+</head>
+<body>
+    팀순위<br><br>
+<table>
+        <table border = '1'>
+            <th>순위</th>
+            <th>팀</th>
+            <th >경기수</th>
+            <th>승점</th>
+
+            {% for c in club %}
+            <tr>
+                <td>{{c.rank}}</td>
+                <td>{{ c.c_name }}</td>
+                <td>{{c.played}}</td>
+                <td>{{c.pts}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        뉴스<br><br>
+        <table>
+            <table border = '1'>
+                <th>제목</th>
+                <th>내용</th>
+                <th>시간</th>
+                <th >언론사</th>
+        
+                {% for c in news %}
+                <tr>
+                    <td><a href="{{c.url}}" target='_blank'>{{c.n_title|truncatechars:14}}</a></td>
+                    <td>{{c.content|truncatechars:20}}</td>
+                    <td>{{c.date }}</td>
+                    <td>{{c.press}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+    커뮤니티 인기글<br><br>
+<table>
+    <table border = '1'>
+        <th>제목</th>
+        <th>내용</th>
+        <th>시간 </th>
+        <th >작성자</th>
+
+        {% for c in community %}
+        <tr>
+            <td>{{c.title}}</td>
+            <td>{{c.content|truncatechars:20}}</td>
+            <td>{{c.date }}</td>
+            <td>{{c.user.u_id}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    
