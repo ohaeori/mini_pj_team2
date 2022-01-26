@@ -1,0 +1,23 @@
+<form method="post" action="{% url 'community:login_custom' %}">
+    {% csrf_token %}
+    아이디 : <input type="text" name="u_id"><br>
+    비밀번호 : <input type="text" name="pw"><br>
+    <input type="submit" value="로그인"><br>
+    
+    {% if request.session.u_id %}
+        <a href="{% url 'community:logout_custom' %}">
+        {{ request.session.u_id }} 님 반갑습니다. (로그아웃)
+        </a>
+    
+    {% else %}
+        <p>현재 상태 : Guest</p>
+    {% endif %}
+</form>
+
+{% comment %} {% if request.session.user_id %}
+    <a href="{% url 'member:logout_custom' %}">
+    {{ request.session.user_name }} 님 반갑습니다. (로그아웃)
+    </a>
+{% else %}
+    <p>현재 상태 : Guest</p>
+{% endif %} {% endcomment %}
