@@ -76,50 +76,6 @@
         <th>사진</th>
         <th>국가</th>
 
-=======
-
-<div>
-    <h3 class = "display-5 fw-bold">선수 검색기</h3>
-    <form method = 'POST'>
-        {% csrf_token %}
-        <label for = 'club'>클럽</label>
-        <input type = "text" name="club" class="form-control"/>
-        <br/>
-        <label for = 'name'>선수 이름</label>
-        <input type = "text" name="name" class="form-control"/>
-        <br/>
-        <label for = 'position'>포지션</label>
-        <select name = 'position' class="form-control">
-            <option value = "all">모두</option>
-            <option value = "GK">GK</option>
-            <option value = "DF">DF</option>
-            <option value = "MF">MF</option>
-            <option value = "FW">FW</option>
-        </select>
-        <br/>
-        <label for = 'country'>국가</label>
-        <input type = "text" name="country" class="form-control"/>
-        <br/>
-
-        <input type = "submit" value = "검색"/>
-    </form>
-</div>
-
-<div>
-    <h3 class = "display-5 fw-bold">검색 결과</h3>
-    <table class="table table-striped table-hover">
-        <th>선수 아이디</th>
-        <th>이름</th>
-        <th>등번호</th>
-        <th>키</th>
-        <th>몸무게</th>
-        <th>생년월일</th>
-        <th>소속클럽</th>
-        <th>포지션</th>
-        <th>사진</th>
-        <th>국가</th>
-
->>>>>>> Stashed changes
         {% for p in P_list %}
         <tr>
             <td>{{ p.p_id }}</td>
@@ -135,19 +91,10 @@
         </tr>
         {% endfor %}
     </table>
-<<<<<<< Updated upstream
+
 </div>
 {% comment %} {% for p in P_list %}
 <h3>{{ p.p_id }} /{{p.p_name}} / {{ p.position }} </h3>
 {% endfor %} {% endcomment %}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-=======
-    {% comment %} {% for p in P_list %}
-    <h3>{{ p.p_id }} /{{p.p_name}} / {{ p.position }} </h3>
-    {% endfor %} {% endcomment %}
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</div>
->>>>>>> Stashed changes
