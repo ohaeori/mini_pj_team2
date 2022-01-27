@@ -11,8 +11,11 @@
 
 
 
-<body>
-    리그선택<br><br>
+<body><center><div class="container">
+    <Div>
+        리그선택
+    </div>
+
     {% comment %} {% for league in league_list %}
     <a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/"><button type="button">{{league.l_name}}<img src="{% static '{{league.l_name}}.png' %}">{{league.l_name}}.png</button></a>
     {% endfor %} {% endcomment %}
@@ -66,5 +69,5 @@
     <button><a href="news/">뉴스</a></button>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
+</div></center></body>
 </html>
