@@ -14,7 +14,10 @@
         <p>제목 : {{poster.title}}</p>
         <p>{{poster.content}}</p>
         
-        <img src="/static/media/{{ poster.url }}">
+        
+        <a href="/static/media/{{ poster.url }}" download><img src="/static/media/{{ poster.url }}"></a>
+
+
         {% comment %} <img src="{% static 'media/'|add:poster.url %}"> {% endcomment %}
         <p>{{ poster.url }}</p>
         
