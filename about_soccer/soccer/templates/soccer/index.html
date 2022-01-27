@@ -13,9 +13,54 @@
 
 <body>
     리그선택<br><br>
-    {% for league in league_list %}
-    <a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/"><button type="button">{{league.l_name}}<img src="{% static '{{league.l_name}}.png' %}"></button></a>
-    {% endfor %}
+    {% comment %} {% for league in league_list %}
+    <a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/"><button type="button">{{league.l_name}}<img src="{% static '{{league.l_name}}.png' %}">{{league.l_name}}.png</button></a>
+    {% endfor %} {% endcomment %}
+    
+    <a href="main/BUNDESLIGA/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'BUNDESLIGA.png' %}">
+        </button>
+    </a>
+    <a href="main/eredivisie/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'erediviseie.png' %}">
+        </button>
+    </a>
+    <a href="main/LaLiga/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'LaLiga.png' %}">
+        </button>
+    </a>
+    <a href="main/LIGA NOS/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'LIGA NOS.png' %}">
+        </button>
+    </a>
+    <br/>
+    <a href="main/LIGUE 1/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'LIGUE 1.png' %}">
+        </button>
+    </a>
+    <a href="main/Premier League/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'Premier League.png' %}">
+        </button>
+    </a>
+    <a href="main/SERIE A/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'SERIE A.jpg' %}">
+        </button>
+    </a>
+    <a href="main/Süper Lig/{{date1|date:'m-d'}}/">
+        <button type="button">{{league.l_name}}
+            <img width=300 height=300 src="{% static 'Süper Lig.png' %}">
+        </button>
+    </a>
+
+
+
         <br><br><br>
     <button><a href="community/">게시판</a></button>
     <button><a href="news/">뉴스</a></button>
