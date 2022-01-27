@@ -3,19 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>notice-list</title>
+
+    <style>
+        #tb1 { position:absolute; left:100px; top:100px; }
+        #tb2 { position:absolute; left:100px; top:100px; display:none; }
+        #tb3 { position:absolute; left:100px; top:100px; display:none; }
+        .move {
+            position:relative;
+            left:250px;
+        }
+    </style>
+        <script language="javascript">
+        function view(arg)
+        {
+            var t1 = document.getElementById("tb_date");
+            var t2 = document.getElementById("tb_good");
+            var t3 = document.getElementById("tb_com");
+            
+            if(arg == 1)
+            {
+                t1.style.display="block";
+                t2.style.display="none";
+                t3.style.display="none";
+            }
+            else if(arg == 2)
+            {
+                t1.style.display="none";
+                t2.style.display="block";
+                t3.style.display="none";
+            }
+            else
+            {     
+                t1.style.display="none";
+                t2.style.display="none";
+                t3.style.display="block";
+            }
+        }
+        </script>
 </head>
+
 <body>
     게시판 목록<br><br>
-    <table>
 
         
     <hr>
-    {% comment %} <h1>
-        <button><a href="create_notice/">최신순</a></button>
-        <button><a href="create_notice/">추천순</a></button>
-        <button><a href="create_notice/">댓글순</a></button>
-    </h1> {% endcomment %}
-        <table border = '1'>
+    <h1>
+        <input type="button" value="최신순" onClick="view(1)">
+        <input type="button" value="추천순" onClick="view(2)">
+        <input type="button" value="댓글순" onClick="view(3)">
+        
+       
+        <button class = "move">
+            <a href="create_notice/">게시글 작성</a>
+        </button>
+
+    </h1>
+        <table id = "tb_date" border = '1' cellpadding="5px">
             <th>게시글 번호</th>
             <th >제목</th>
             <th>업로드 날짜</th>
@@ -28,7 +71,7 @@
             </tr>
             {% endfor %}
         </table>
-        <table border = '1'>
+        <table id = "tb_good" border = '1' cellpadding="5px" style=display:none>
             <th>게시글 번호</th>
             <th>제목</th>
             <th>추천수</th>
@@ -43,7 +86,7 @@
         </table>
         
 
-        <table border = '1'>
+        <table id = "tb_com" border = '1' cellpadding="5px" style=display:none>
             <th>게시글 번호</th>
             <th>제목</th>
             <th>댓글수</th>
@@ -57,9 +100,7 @@
             {% endfor %}
         </table>
 
-    </table>
-    <button>
-        <a href="create_notice/">작성</a>
-    </button>
+
+
 </body>
 </html>
