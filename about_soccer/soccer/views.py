@@ -69,7 +69,8 @@ def create_notice(request):
             user=USER.objects.get(u_id=request.session['u_id']),
             url=name,
             board=BOARD.objects.get(b_name='자유게시판'),
-            date=timezone.now()
+            date=timezone.now(),
+            good=0
         )
         return redirect('/community/notice_list/')
     return render(request, 'soccer/create_notice.html')
@@ -104,6 +105,11 @@ def posting(request,pk):
     poster=BOARD_TITLE.objects.get(pk=pk)
     make_comment(request,pk)#t_num=poster.t_num
     comment_list = COMMENT.objects.filter(board_title=poster)
+    if request.method=='POST':
+        print('??')
+        poster.good +=1
+        poster.save()
+        return redirect('./')
     return render(request,'soccer/posting.html',{'poster':poster,'comment_list': comment_list})
 
 

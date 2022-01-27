@@ -19,10 +19,15 @@
 
 
         {% comment %} <img src="{% static 'media/'|add:poster.url %}"> {% endcomment %}
-        <p>{{ poster.url }}</p>
         
-        
+        <br>
+            
     </table>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <button>추천 : {{poster.good}}</button>
+    </form>
     <table>
         {% if request.session.u_id_col %} 
             <form method = 'POST'>
