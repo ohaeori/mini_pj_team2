@@ -94,7 +94,7 @@
             {% for board_num, board_data in zip_board %}
             <tr>
                 <td>{{ board_num.board_title }}</td>
-                <td><a href='{{board_data.pk}}'>{{ board_data.title }}</a></td>
+                <td><a href='{{board_data.pk}}/'>{{ board_data.title }}</a></td>
                 <td>{{ board_num.count_board }}</td>
             </tr>
             {% endfor %}

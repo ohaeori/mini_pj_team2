@@ -1,0 +1,28 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-black">
+    <div class="container">
+        <a class="navbar-brand" href="/"> 
+            <img src="{% static 'logo.jpeg' %}" alt="Football News" style="width:40px;"> Communities </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+            aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">
+        </span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <!--여기서 url을 넣어 news페이지나 communities로 이동할 수 있다.-->
+                <li class="nav-item"><a class="nav-link" href="/news/">News</a></li>
+                <li class="nav-item"><a class="nav-link" href="/community_sorted_date/">Communities</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-dark py-5" style="background-image: 
+                            url('https://image.edaily.co.kr/images/photo/files/NP/S/2020/08/PS20081800304.jpg'); background-size:cover;">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-left text-black">
+            <h1 class="display-4 fw-bolder">Communities</h1>
+            <p class="lead fw-normal text-white-50 mb-0">coummunication</p>
+        </div>
+    </div>
+</header>

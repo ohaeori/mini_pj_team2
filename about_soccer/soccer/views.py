@@ -9,6 +9,146 @@ import datetime
 #처음화면
 
 
+from django.core.paginator import Paginator
+
+# Create your views here.
+#######################################################################################
+#############커뮤니티를 위한 기능######################################################
+
+# (1) 커뮤니티 첫 화면(날짜순으로 정렬)
+def community_sorted_date(request):
+    now_page = request.GET.get('page', 1)
+    # 게시물 정렬
+    post_list=BOARD_TITLE.objects.all() #모든 게시글 가져오기
+    sorted_post_list=post_list.order_by('-date') #날짜 순으로 정렬하기
+    # sorted_post_list = BOARD_TITLE.objects.order_by('-date')
+    p = Paginator(sorted_post_list, 10)
+
+    # 파라미터로 넘어온 어떠한 값은 무조건 문자열
+    now_page = int(now_page)
+
+    info = p.get_page(now_page)
+    start_page = (now_page - 1) // 10 * 10 + 1
+    end_page = start_page + 9
+    if end_page > p.num_pages:
+        end_page = p.num_pages
+
+    # 로그인 기능
+    nick = 'guest'
+    if request.method == 'POST':
+        if request.POST.get('u_id'): # if문 돌리면 자동으로 request가 오는듯? 그거 방지를 위해서
+            user_id = request.POST.get('u_id')
+            user_pw = request.POST.get('pw')
+            try:
+                u = USER.objects.get(u_id=user_id, pw=user_pw)
+                nick = u.nickname
+                # 회원정보 조회 실패 시 예외 발생
+            except:
+                return HttpResponse('로그인 실패')
+            else: #로그인 판단 요소 ==> 나중에 이걸로 다양한 정보 확인(동현에이블러님 활용)
+                request.session['u_id'] = u.u_id
+                request.session['u_name'] = u.u_name
+                request.session['u_id_col'] = user_id
+            return render(
+                request,'soccer/cummunity_page.html',
+                {'user_nickname': nick,
+                'sorted_post_list':sorted_post_list, 'info' : info, 'page_range' : range(start_page, end_page + 1)})
+    return render(
+        request, 'soccer/cummunity_page.html',  
+        {'user_nickname': nick,
+        'sorted_post_list':sorted_post_list, 'info' : info, 'page_range' : range(start_page, end_page + 1)}
+        )
+def community_sorted_good(request):
+    post_list=BOARD_TITLE.objects.all() #모든 게시글 가져오기
+    sorted_post_list=post_list.order_by('-good') #추천 순으로 정렬하기
+    # 로그인 기능
+    nick = 'guest'
+    if request.method == 'POST':
+        if request.POST.get('u_id'): # if문 돌리면 자동으로 request가 오는듯? 그거 방지를 위해서
+            user_id = request.POST.get('u_id')
+            user_pw = request.POST.get('pw')
+            try:
+                u = USER.objects.get(u_id=user_id, pw=user_pw)
+                nick = u.nickname
+                # 회원정보 조회 실패 시 예외 발생
+            except:
+                return HttpResponse('로그인 실패')
+            else: #로그인 판단 요소 ==> 나중에 이걸로 다양한 정보 확인(동현에이블러님 활용)
+                request.session['u_id'] = u.u_id
+                request.session['u_name'] = u.u_name
+                request.session['u_id_col'] = user_id
+            return render(
+                request,'soccer/cummunity_page.html',
+                {'user_nickname': nick,
+                'sorted_post_list':sorted_post_list})
+    return render(
+        request, 'soccer/cummunity_page.html',  
+        {'user_nickname': nick,
+        'sorted_post_list':sorted_post_list}
+        )
+# (3) 커뮤니티 첫 화면(댓글순) <-------------------------------------------미완
+def community_sorted_comment(request):
+    return HttpResponse("미완성기능 입니다(첫페이지 - 댓글 순으로 정렬")
+
+# (4) 로그아웃 기능
+def logout_custom(request):
+    del request.session['u_id'] # 개별 삭제
+    del request.session['u_name'] # 개별 삭제
+    request.session.flush() # 전체 삭제
+    return redirect('/community_sorted_date/')
+    ## 이거 현재 경로를 다시 반환하는 형태로 진행해야하는데
+
+# (5) 게시글 보기 페이지
+#게시글 보기
+def posting(request,pk):
+    poster=BOARD_TITLE.objects.get(pk=pk)
+    make_comment(request,pk)#t_num=poster.t_num
+    comment_list = COMMENT.objects.filter(board_title=poster)
+    if request.method=='POST':
+        poster.good +=1
+        poster.save()
+        return redirect('./')
+    return render(request,'soccer/posting.html',{'poster':poster,'comment_list': comment_list})
+
+
+# (6) 게시글 삭제 페이지
+def delete_notice(request, pk):
+    poster = BOARD_TITLE.objects.get(pk=pk)
+    if request.method == 'POST':
+        poster.delete()
+        return redirect('/community_sorted_date/')
+    return render(
+        request, 'soccer/delete_notice.html', 
+        {'poster': poster}
+        )
+
+# (7) 회원가입 기능
+#회원가입
+def signup_custom(request):
+    if request.method == 'POST':
+        if request.POST.get('u_id'):
+            user_id = request.POST.get('u_id')
+            user_pw = request.POST.get('pw')
+            user_name = request.POST.get('u_name')
+            birth_date = request.POST.get('birth_date')
+            nickname = request.POST.get('nickname')
+            phone_num = request.POST.get('phone_num')
+            email = request.POST.get('email')
+
+            u = USER(
+                u_id=user_id, pw=user_pw, u_name=user_name, 
+                birth_date=birth_date, nickname=nickname, phone_num=phone_num, email=email)
+            u.date_joined = timezone.now()
+            u.save()
+            return redirect('/community_sorted_date/')
+    else:
+        return render(request, 'soccer/signup_custom.html')
+
+#############커뮤니티를 위한 기능######################################################
+#######################################################################################
+
+
+
 def community(request):
     return render(request,'soccer/community.html')
 
@@ -69,8 +209,7 @@ def create_notice(request):
             user=USER.objects.get(u_id=request.session['u_id']),
             url=name,
             board=BOARD.objects.get(b_name='자유게시판'),
-            date=timezone.now(),
-            good=0
+            date=timezone.now()
         )
         return redirect('/community/notice_list/')
     return render(request, 'soccer/create_notice.html')
@@ -100,28 +239,6 @@ def make_comment(request,pk):
     return render(request,'soccer/comment_box.html',)
 
 
-#게시글 보기
-def posting(request,pk):
-    poster=BOARD_TITLE.objects.get(pk=pk)
-    make_comment(request,pk)#t_num=poster.t_num
-    comment_list = COMMENT.objects.filter(board_title=poster)
-    if request.method=='POST':
-        print('??')
-        poster.good +=1
-        poster.save()
-        return redirect('./')
-    return render(request,'soccer/posting.html',{'poster':poster,'comment_list': comment_list})
-
-
-#게시글 삭제
-def delete_notice(request, pk):
-    poster = BOARD_TITLE.objects.get(pk=pk)
-    if request.method == 'POST':
-        poster.delete()
-        return redirect('/community/notice_list/')
-    return render(request, 'soccer/delete_notice.html', {'poster': poster,'pk':pk})
-
-
 
 
 
@@ -135,53 +252,7 @@ def user(request):
    )
 
 
-#회원가입
-def signup_custom(request):
-    if request.method == 'POST':
-        user_id = request.POST.get('u_id')
-        user_pw = request.POST.get('pw')
-        user_name = request.POST.get('u_name')
-        birth_date = request.POST.get('birth_date')
-        nickname = request.POST.get('nickname')
-        phone_num = request.POST.get('phone_num')
-        email = request.POST.get('email')
 
-        u = USER(
-            u_id=user_id, pw=user_pw, u_name=user_name, 
-            birth_date=birth_date, nickname=nickname, phone_num=phone_num, email=email)
-        u.date_joined = timezone.now()
-        u.save()
-        return redirect('../../')
-    else:
-        return render(request, 'soccer/signup_custom.html')
-
-#로그인
-def login_custom(request):
-    user_list = USER.objects.all()
-    if request.method == 'POST':
-        user_id = request.POST.get('u_id')
-        user_pw = request.POST.get('pw')
-        try:
-            u = USER.objects.get(u_id=user_id, pw=user_pw)
-            # 회원정보 조회 실패 시 예외 발생
-        except:
-            return HttpResponse('로그인 실패')
-        else: #로그인 판단 요소 ==> 나중에 이걸로 다양한 정보 확인(동현에이블러님 활용)
-            request.session['u_id'] = u.u_id
-            request.session['u_name'] = u.u_name
-            request.session['u_id_col'] = user_id
-        return render(request,'soccer/login_custom.html',{'user_list': user_list }
-    )   
-      
-    else:
-        return render(request, 'soccer/login_custom.html')
-
-#로그아웃
-def logout_custom(request):
-    del request.session['u_id'] # 개별 삭제
-    del request.session['u_name'] # 개별 삭제
-    request.session.flush() # 전체 삭제
-    return redirect('../../')
 
 
 def comment(request):

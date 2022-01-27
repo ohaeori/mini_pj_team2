@@ -1,0 +1,28 @@
+{% if request.session.u_id %}
+<div>{{ user_nickname }}</div> <!--닉네임-->
+<div><a href="/logout/custom/">로그아웃</a></div>
+<Div>
+    <div>내가 쓴 글</div>
+    <div>추천한 글</div>
+    <div>글쓰기</div>
+</div> <!--버튼 3개-->
+
+{% else %}
+<div class="login-form" style="margin-right:20px;margin-left:20px;">
+    <form method="post">
+        {% csrf_token%}
+        <div class="form-group">
+        <input type="text" name = "u_id" class="form-control" style="margin:3px;" placeholder="ID입력">
+        </div>
+        <div class="form-group">
+            <input type="password" name ="pw" class="form-control" style="margin:3px;" placeholder="PW입력">
+        </div>
+        <a href="/signup/custom/">
+            > 회원가입</a>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-secondary btn-lg">
+                로그인</button>
+        </div>
+    </form>
+</div>
+{% endif %}
