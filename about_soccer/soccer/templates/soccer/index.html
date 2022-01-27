@@ -2,7 +2,7 @@
 <html lang="en">
 
 
-
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>index</title>
@@ -14,7 +14,7 @@
 <body>
     리그선택<br><br>
     {% for league in league_list %}
-        <button><a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/">{{league.l_name}}</a></button>
+    <a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/"><button type="button">{{league.l_name}}<img src="{% static 'logo.jpeg' %}"></button></a>
         {% endfor %}
         <br><br><br>
     <button><a href="community/">게시판</a></button>
