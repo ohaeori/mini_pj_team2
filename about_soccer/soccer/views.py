@@ -42,9 +42,6 @@ def order_by_comment(request):
 
    
 
-
-
-
 #게시글 목록 표시
 def notice_list(request): 
     notice_list=BOARD_TITLE.objects.all()
@@ -61,7 +58,7 @@ def create_notice(request):
         upload_file = request.FILES.get('url')
         if(upload_file): 
             name = upload_file.name
-            with open('static/media/%s' % name, 'wb') as file:
+            with open('media/%s' % name, 'wb') as file:
                 for chunk in upload_file.chunks():
                     file.write(chunk)
         else : name="null"        
@@ -76,8 +73,6 @@ def create_notice(request):
         )
         return redirect('/community/notice_list/')
     return render(request, 'soccer/create_notice.html')
-
-
 
 def make_comment(request,pk):
     #임시로 로그인 한 척
@@ -118,7 +113,7 @@ def delete_notice(request, pk):
     if request.method == 'POST':
         poster.delete()
         return redirect('/community/notice_list/')
-    return render(request, 'soccer/delete_notice.html', {'poster': poster})
+    return render(request, 'soccer/delete_notice.html', {'poster': poster,'pk':pk})
 
 
 
@@ -192,7 +187,7 @@ def comment(request):
         {'comment' : comment, 'title' : title,}
     )
 
-def player_search(request):
+def player_search(request,date,l_name):
     P_list = PLAYER.objects.all() # 처음에는 모든 선수 정보를 출력하도록 함
 
     posi_list = PLAYER.objects.filter()
@@ -223,7 +218,7 @@ def player_search(request):
     return render(
             request,
             'soccer/player.html',
-            {'P_list':  P_list}
+            {'P_list':  P_list, 'l_name':l_name, 'date':date}
     )
 
 
@@ -232,15 +227,17 @@ def index(request):
     league_list=LEAGUE.objects.all()
     return render(request,'soccer/index.html',{'date1':date1,'league_list':league_list})
 
-def club_info(request,c_name,l_name):
+def club_info(request,c_name,l_name,date):
     player_list=PLAYER.objects.filter(club__c_name__contains=c_name)
     schedule_list=GAME.objects.filter(home_team__contains=c_name ) |GAME.objects.filter(away_team__contains=c_name )
     
-    return render(request,'soccer/club_info.html',{'club_name':c_name,'player_list':player_list,'schedule_list':schedule_list})
+    return render(request,'soccer/club_info.html',
+    {'club_name':c_name,'player_list':player_list,'schedule_list':schedule_list,'date':date, 'l_name':l_name})
 
-def select_club(request,l_name):
+def select_club(request,l_name, date):
     club_list=CLUB.objects.filter(league__l_name__contains=l_name)
-    return render(request,'soccer/select_club.html',{'club_list':club_list,'l_name':l_name})
+    return render(request,'soccer/select_club.html',
+    {'club_list':club_list,'l_name':l_name, 'date':date})
 
 
 def AddDays(sourceDate, count): 
@@ -267,7 +264,7 @@ def main(request,date,l_name):
         date2.append(AddDays(first_date,i).date)
 
     return render(request,'soccer/main.html',
-    {'date2':date2,'news':news,'game':game,'club':club,'community':community,'l_name':l_name})
+    {'date2':date2,'news':news,'game':game,'club':club,'community':community,'l_name':l_name, 'date':date})
 
 def news(request):
     news = NEWS.objects.all()

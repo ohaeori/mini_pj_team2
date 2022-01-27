@@ -14,9 +14,9 @@ urlpatterns = [
     path('community/notice_list/create_notice/', views.create_notice),
     path('community/notice_list/<int:pk>/', views.posting,name='posting'),
     path('community/notice_list/<int:pk>/delete_notice/', views.delete_notice),
-    path('player/', views.player_search), 
-    path('<str:l_name>/club/', views.select_club),
-    path('<str:l_name>/club/<str:c_name>/', views.club_info),
+    path('player/<str:l_name>/<str:date>/', views.player_search), #-- 변경
+    path('club/<str:l_name>/<str:date>/', views.select_club),
+    path('club/<str:l_name>/<str:date>/<str:c_name>/', views.club_info),
     path('main/<str:l_name>/<str:date>/', views.main),
     path('news/', views.news),
     path('', views.index),
