@@ -42,6 +42,9 @@ def order_by_comment(request):
 
    
 
+
+
+
 #게시글 목록 표시
 def notice_list(request): 
     notice_list=BOARD_TITLE.objects.all()
@@ -58,7 +61,7 @@ def create_notice(request):
         upload_file = request.FILES.get('url')
         if(upload_file): 
             name = upload_file.name
-            with open('media/%s' % name, 'wb') as file:
+            with open('static/media/%s' % name, 'wb') as file:
                 for chunk in upload_file.chunks():
                     file.write(chunk)
         else : name="null"        
@@ -73,6 +76,8 @@ def create_notice(request):
         )
         return redirect('/community/notice_list/')
     return render(request, 'soccer/create_notice.html')
+
+
 
 def make_comment(request,pk):
     #임시로 로그인 한 척
