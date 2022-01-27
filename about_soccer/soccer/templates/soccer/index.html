@@ -14,8 +14,8 @@
 <body>
     리그선택<br><br>
     {% for league in league_list %}
-    <a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/"><button type="button">{{league.l_name}}<img src="{% static 'logo.jpeg' %}"></button></a>
-        {% endfor %}
+    <a href="main/{{league.l_name}}/{{date1|date:'m-d'}}/"><button type="button">{{league.l_name}}<img src="{% static '{{league.l_name}}.png' %}"></button></a>
+    {% endfor %}
         <br><br><br>
     <button><a href="community/">게시판</a></button>
     <button><a href="news/">뉴스</a></button>
