@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+    {{l_name}}<br><br>
+    <table>
+        {% for list in club_list %}
+            <button><a href="{{list.c_name}}/">{{list.c_name}}</a></button>
+        {% endfor %}
+    
+    </table>
+    
+    
+</body>
+</html>

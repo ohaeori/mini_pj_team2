@@ -1,7 +1,8 @@
+from django.utils import timezone
 from django.shortcuts import redirect, render
-from matplotlib.pyplot import title
-from .models import Notice
-from django.http import HttpResponse
+from sqlalchemy import null
+from .models import BOARD_TITLE
+
 # Create your views here.
 #처음화면
 def index(request):
@@ -9,46 +10,40 @@ def index(request):
 
 #게시글 목록 표시
 def notice_list(request): 
-    notice_list=Notice.objects.all()
+    notice_list=BOARD_TITLE.objects.all()
     return render(request, 'notice/notice_list.html',{'notice_list':notice_list})
 
 #게시글 작성
 def create_notice(request):
     if request.method == 'POST':
-        if request.POST['mainphoto']:
-            new_article=Notice.objects.create(
-                title=request.POST['title'],
-                contents=request.POST['contents'],
-            )
-        else:
-            new_article=Notice.objects.create(
-                title=request.POST['title'],
-                contents=request.POST['contents'],
-            )
+        upload_file = request.FILES.get('url')
+        if(upload_file): 
+            name = upload_file.name
+            with open('media/%s' % name, 'wb') as file:
+                for chunk in upload_file.chunks():
+                    file.write(chunk)
+        else : name="null"        
+
+        BOARD_TITLE.objects.create(
+            title=request.POST['title'],
+            content=request.POST['content'],
+            url=name,
+            b_id=1,
+            date=timezone.now()
+        )
         return redirect('/notice_list/')
     return render(request, 'notice/create_notice.html')
 
-#게시글 등록
+#게시글 보기
 def posting(request,pk):
-    poster=Notice.objects.get(pk=pk)
+    poster=BOARD_TITLE.objects.get(pk=pk)
     return render(request,'notice/posting.html',{'poster':poster})
+
 
 #게시글 삭제
 def delete_notice(request, pk):
-    poster = Notice.objects.get(pk=pk)
+    poster = BOARD_TITLE.objects.get(pk=pk)
     if request.method == 'POST':
         poster.delete()
         return redirect('/notice_list/')
     return render(request, 'notice/delete_notice.html', {'poster': poster})
-
-
-def upload1(request):
-    if request.method == 'POST':
-        upload_file = request.FILES.get('file') # 파일 객체
-        name = upload_file.name # 파일 이름
-        size = upload_file.size # 파일 크기
-        with open(name, 'wb') as file: # 파일 저장
-            for chunk in upload_file.chunks():
-                file.write(chunk)
-        return HttpResponse('%s<br>%s' % (name, size))
-    return render(request, 'notice/upload1.html')

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>posting</title>
+</head>
+<body>
+    
+    <table>
+        <p>제목 : {{poster.title}}</p>
+        <p>{{poster.content}}</p>
+        <img src='./media/{{poster.url}}'>
+        <p>{{ poster.url }}</p>
+        
+    </table>
+    <table>
+        {% if request.session.u_id_col %} 
+            <form method = 'POST'>
+                {% csrf_token %}
+                <label for ='input_comment'>댓글을 입력하세요(60자 이하)</label>
+                <br/>
+                <input type="text" name = "input_comment"/>
+                <input type="submit" value = "작성"/> 
+            </form>
+
+        {% else %}
+            <form method = 'POST'>
+                {% csrf_token %}
+                <label for ='input_comment'>댓글을 입력하세요(60자 이하)</label>
+                <br/>
+                <input type="text" name = "input_comment" placeholder= "로그인이 필요한 기능입니다." disabled/>
+                <input type="submit" value = "작성" disabled/>
+            </form>
+
+        {% endif %}
+
+
+
+    </table>
+
+    <button>
+        <a href="../">목록</a>
+    </button><br>
+    <button>
+        <a href="./delete_notice">삭제</a>
+    </button>
+    
+    
+    <ul>
+        {% for comment in comment_list %}
+            <ol>{{comment.u_id_col.u_name}} /{{comment.comment}}/ </ol>
+        {% endfor %}
+    </ul>
+</body>
+</html>

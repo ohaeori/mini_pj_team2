@@ -1,0 +1,17 @@
+{% comment %} 본인 게시글, 댓글 {% endcomment %}
+
+{%for t in title %}
+    '게시글'
+    {{t.u_id}} / {{t.t_num}} /{{t.title}} / {{t.content}}
+    <br>
+{%endfor%}
+
+
+
+{%for s in comment %}
+    '댓글'
+    {{s.u_id}} / {{s.t_num}} / {{s.comment}}
+    <br>
+{%endfor%}
+<button><a href="../">뒤로가기</a></button>
+

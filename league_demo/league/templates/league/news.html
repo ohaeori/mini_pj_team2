@@ -1,0 +1,17 @@
+뉴스<br><br>
+<table>
+    <table border = '1'>
+        <th>제목</th>
+        <th>내용</th>
+        <th>시간</th>
+        <th >언론사</th>
+
+        {% for c in news %}
+        <tr>
+            <td><a href="{{c.url}}" target='_blank'>{{c.n_title|truncatechars:14}}</a></td>
+            <td>{{c.content|truncatechars:20}}</td>
+            <td>{{c.date }}</td>
+            <td>{{c.press}}</td>
+        </tr>
+        {% endfor %}
+    </table>
