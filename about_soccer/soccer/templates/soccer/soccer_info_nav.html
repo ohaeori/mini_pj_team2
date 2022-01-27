@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-black">
     <div class="container">
-        <a class="navbar-brand" href="#"> 
+        <a class="navbar-brand" href="../../../"> 
             <img src="{% static 'logo.jpeg' %}" alt="Football News" style="width:40px;"> 축구에 빠지다 </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
@@ -22,7 +22,7 @@
                             url('https://image.edaily.co.kr/images/photo/files/NP/S/2020/08/PS20081800304.jpg'); background-size:cover;">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-left text-black">
-            <h1 class="display-4 fw-bolder">축구의 모든것</h1>
+            <h1 class="display-4 fw-bolder">{{l_name}}</h1>
             <p class="lead fw-normal text-white-50 mb-0">-</p>
         </div>
     </div>
