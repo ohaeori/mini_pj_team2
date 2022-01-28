@@ -1,11 +1,36 @@
 {% if request.session.u_id %}
 <div class="login-form" style="margin-right:20px;margin-left:20px;">
     <div><span>{{ request.session.nickname }} 님<span></div> <!--닉네임-->
-    <a style="text-decoration:none" href="mailto:aaaa@gmail.com?
-    &amp;subject=되나?
-    &amp;body=되네 ㅋㅋ">
-    >메일 보내기
-    </a>
+    <details>
+        <summary>메일 보내기</summary>
+        받는 사람 : <input id='mail' onChange='getMail()'><br>
+        제목 : <input id='tit' onChange='getTitle()'><br>
+        내용 <br> <textarea rows="10" cols="30" id='con' onChange='getContant()'></textarea><button>등록</button>
+        <div id='result' ><button>메일 보내기</button></div>
+        <div id='temp1' style='display:none'></div>
+        <div id='temp2' style='display:none'></div>
+        <script>    
+            function getMail(){
+                var a=document.getElementById('mail').value
+                document.getElementById("temp1").innerHTML=a
+            }
+            function getTitle(){
+                var a=document.getElementById('tit').value
+                document.getElementById("temp2").innerHTML=a
+            }
+            function getContant(){
+                var a=document.getElementById('con').value
+                document.getElementById("result").innerHTML
+                =`<button><a  href="mailto:`
+                +document.getElementById("temp1").innerHTML
+                +`?&amp;subject=`
+                +document.getElementById("temp2").innerHTML
+                +`&amp;body=`
+                +a
+                +`">매일 보내기</a></button>`   
+            }
+        </script>
+    </details>
     <div><a style="text-decoration:none" href="/logout/custom/">>로그아웃</a></div>
     <div class = "d-grid gap-2">
             <div class="btn btn-light col" style="font-size: 13px;font-weight: bold; margin:5px;">
