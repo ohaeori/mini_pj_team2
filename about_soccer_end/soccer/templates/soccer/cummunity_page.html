@@ -86,12 +86,14 @@
                     <th >제목</th>
                     <th>작성자닉네임</th>
                     <th>업로드 날짜</th>
+                    <th>추천 수</th>
                     {% for d in info %}
                     <tr>
                         <td>{{ d.t_num }}</td>
                         <td><a href="{{d.pk}}/">{{ d.title }}</a></td>
                         <td>{{d.user.nickname}}</td>
                         <td>{{ d.date }}</td>
+                        <td>{{ d.good }}</td>
                         
                     </tr>
                     {% endfor %}

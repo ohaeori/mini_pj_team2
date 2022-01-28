@@ -1,6 +1,7 @@
 {% if request.session.u_id %}
 <div class="login-form" style="margin-right:20px;margin-left:20px;">
     <div><span>{{ request.session.nickname }} 님<span></div> <!--닉네임-->
+
     <details>
         <summary>메일 보내기</summary>
         받는 사람 : <input id='mail' onChange='getMail()'><br>
@@ -31,6 +32,7 @@
             }
         </script>
     </details>
+    
     <div><a style="text-decoration:none" href="/logout/custom/">>로그아웃</a></div>
     <div class = "d-grid gap-2">
             <div class="btn btn-light col" style="font-size: 13px;font-weight: bold; margin:5px;">
