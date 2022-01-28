@@ -1,0 +1,44 @@
+{% if request.session.u_id %}
+<div class="login-form" style="margin-right:20px;margin-left:20px;">
+    <div><span>{{ request.session.nickname }} 님<span></div> <!--닉네임-->
+    <a style="text-decoration:none" href="mailto:aaaa@gmail.com?
+    &amp;subject=되나?
+    &amp;body=되네 ㅋㅋ">
+    >메일 보내기
+    </a>
+    <div><a style="text-decoration:none" href="/logout/custom/">>로그아웃</a></div>
+    <div class = "d-grid gap-2">
+            <div class="btn btn-light col" style="font-size: 13px;font-weight: bold; margin:5px;">
+                <a href="/comment/" style= "text-decoration:none"><span>
+                    내가 쓴 글
+                </span></a>
+            </div>
+    </div>
+    <a href="/community_sorted_date/create_notice/">
+        <div class="d-grid gap-2">
+            <div class="btn btn-dark" style="font-size: 13px;font-weight: bold;margin:5px;">
+                    글쓰기
+            </div>
+        </div>
+    </a>
+</div>
+
+{% else %}
+<div class="login-form" style="margin-right:20px;margin-left:20px;">
+    <form method="post">
+        {% csrf_token%}
+        <div class="form-group">
+        <input type="text" name = "u_id" class="form-control" style="margin:3px;" placeholder="ID입력">
+        </div>
+        <div class="form-group">
+            <input type="password" name ="pw" class="form-control" style="margin:3px;" placeholder="PW입력">
+        </div>
+        <a href="/signup/custom/">
+            > 회원가입</a>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-secondary btn-lg">
+                로그인</button>
+        </div>
+    </form>
+</div>
+{% endif %}
